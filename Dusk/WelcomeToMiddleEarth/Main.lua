@@ -14,6 +14,8 @@ local text = translations[locale]
 local player = Turbine.Gameplay.LocalPlayer.GetInstance()
 local mainWindow
 local levelWindow
+local guideWindow
+local optionsWindow
 local sceneWindows = {}
 local bindings = {}
 local settingsKey = "WelcomeToMiddleEarth"
@@ -23,13 +25,25 @@ for _, key in ipairs({"auto", "scenes", "traits"}) do
     if type(settings[key]) ~= "boolean" then settings[key] = true end
 end
 local saveFailureReported = false
+local function reportSaveFailure(message)
+    if saveFailureReported then return end
+    saveFailureReported = true
+    local fallback = "WelcomeToMiddleEarth: unable to save settings for this character."
+    local detail = message and (" ("..tostring(message)..")") or ""
+    pcall(Turbine.Shell.WriteLine, (text.saveFailed or fallback)..detail)
+end
 local function save()
-    local saveOk = pcall(Turbine.PluginData.Save, Turbine.DataScope.Character, settingsKey, settings)
-    if not saveOk and not saveFailureReported then
-        saveFailureReported = true
-        pcall(Turbine.Shell.WriteLine, text.saveFailed or "WelcomeToMiddleEarth: unable to save settings for this character.")
-    end
-    return saveOk
+    local callOk = pcall(
+        Turbine.PluginData.Save,
+        Turbine.DataScope.Character,
+        settingsKey,
+        settings,
+        function(succeeded, message)
+            if succeeded == false then reportSaveFailure(message) end
+        end
+    )
+    if not callOk then reportSaveFailure() end
+    return callOk
 end
 
 -- LocalPlayer:GetName() has historically caused the original level-up popup to
@@ -172,11 +186,11 @@ function MainFunction_EinsameLande()
 		
 		local l = Turbine.Engine.GetLanguage()
 		if l == Turbine.Language.English or l == Turbine.Language.EnglishGB then
-			mainWindow_EinsameLande:SetText("The weather top!")
+			mainWindow_EinsameLande:SetText("Weathertop!")
 		elseif l == Turbine.Language.German then
 			mainWindow_EinsameLande:SetText("Die Wetterspitze!")
 		elseif l == Turbine.Language.French then
-			mainWindow_EinsameLande:SetText("La pointe météo!")
+			mainWindow_EinsameLande:SetText("Mont Venteux !")
 		end
 		mainWindow_EinsameLande.Image=Turbine.UI.Label(); 
 		mainWindow_EinsameLande.Image:SetParent(mainWindow_EinsameLande);
@@ -193,9 +207,9 @@ function MainFunction_EinsameLande()
 		if l == Turbine.Language.English or l == Turbine.Language.EnglishGB then
 			mainWindow_EinsameLande.Message:SetText("The Witch-King has wounded Frodo on Weathertop with a Morgul Blade, but Strider was able to drive the Nazgûl away. All is not well with him, he must join Lord Elrond in Rivendell. Quickly!\n\nSpeak with Candaith on the slope of the weathertop.")
 		elseif l == Turbine.Language.German then
-			mainWindow_EinsameLande.Message:SetText("Der Hexenkönig hat Frodo auf der Wetterspitze mit einer Morgulklinge verwundet, doch Grand-Pas konnte die Nazgûl vertreiben. Es steht nicht gut um ihn, er muss zu Herrn Elrond nach Bruchtall. Schnell!\n\nSprecht mit Candaith am Hang der Wetterspitze.")
+			mainWindow_EinsameLande.Message:SetText("Der Hexenkönig hat Frodo auf der Wetterspitze mit einer Morgulklinge verwundet, doch Grand-Pas konnte die Nazgûl vertreiben. Es steht nicht gut um ihn, er muss zu Herrn Elrond nach Bruchtal. Schnell!\n\nSprecht mit Candaith am Hang der Wetterspitze.")
 		elseif l == Turbine.Language.French then
-			mainWindow_EinsameLande.Message:SetText("Le Roi-Sorcier a blessé Frodon avec une lame de Morgul sur le Mont Venteux, mais Grand-Pas a réussi à repousser les Nazgûl. Les choses ne vont pas bien pour lui, il doit rejoindre le Seigneur Elrond à Fondcombe. Vite!\nParle avec Candaith sur le versant du Mont Venteux.")
+			mainWindow_EinsameLande.Message:SetText("Le Roi-Sorcier a blessé Frodon avec une lame de Morgul sur le Mont Venteux, mais Grand-Pas a réussi à repousser les Nazgûl. Les choses ne vont pas bien pour lui, il doit rejoindre le Seigneur Elrond à Fondcombe. Vite!\n\nParle avec Candaith sur le versant du Mont Venteux.")
 		end	
 		mainWindow_EinsameLande.Message:SetTextAlignment(Turbine.UI.ContentAlignment.TopCenter)
 
@@ -244,7 +258,7 @@ function MainFunction_Bruchtal()
 		elseif l == Turbine.Language.German then
 			mainWindow_Bruchtal.Message:SetText("Der Ring kann nicht zerstört werden, Gimli, Gloins Sohn. Jedenfalls von keiner Kraft, die wir hier besitzen. In den Feuern des Schicksalsberges erschaffen, kann er nur dort zerstört werden! Man muss ihn tief nach Mordor hineinbringen und ihn in die feurige Glut zurückwerfen, aus der er stammt. Einer von euch muss das tun! \n\nSo sei es! Neun Gefährten. Ihr bildet also die Gemeinschaft des Ringes! ~ Elrond")
 		elseif l == Turbine.Language.French then
-			mainWindow_Bruchtal.Message:SetText("L'Anneau ne peut pas être détruit, Gimli, fils de Gloin. En tout cas, par aucun des pouvoirs que nous possédons ici. Créé dans les flammes de la Montagne du Destin, il ne peut être détruit que là! Il faut l'emmener au plus profond du Mordor et le rejeter dans les braises ardentes d'où il est issu. L'un d'entre vous doit le faire! \n\nSo soit! Neuf compagnons. Vous formez donc la communauté de l'Anneau! ~ Elrond")
+			mainWindow_Bruchtal.Message:SetText("L'Anneau ne peut pas être détruit, Gimli, fils de Gloin. En tout cas, par aucun des pouvoirs que nous possédons ici. Créé dans les flammes de la Montagne du Destin, il ne peut être détruit que là! Il faut l'emmener au plus profond du Mordor et le rejeter dans les braises ardentes d'où il est issu. L'un d'entre vous doit le faire! \n\nAinsi soit-il ! Neuf compagnons. Vous formez donc la communauté de l'Anneau! ~ Elrond")
 		end
 		mainWindow_Bruchtal.Message:SetTextAlignment(Turbine.UI.ContentAlignment.TopCenter)
 
@@ -291,7 +305,7 @@ function MainFunction_Lothlorien()
         elseif locale == "en" then
             mainWindow_Lothlorien.Message:SetText("The Fellowship reaches Lothlorien without Gandalf after the events in Moria. In the realm of Galadriel and Celeborn, the companions find shelter before continuing their journey.")
         else
-		mainWindow_Lothlorien.Message:SetText("Der Feind weiß, dass ihr hier eingetroffen seid. Eure Hoffnung unerkannt zu bleiben, sie ist nun zunichte.Hier sind acht, doch neun sind von Bruchtal aus aufgebrochen. Sagt mir, wo ist Gandalf, denn es verlangt mich sehr mit ihm zu sprechen. Ich kann ihn aus weiter Ferne nicht sehen. ~ Celeborn\n\nGandalf der Graue hat die Grenzen dieses Landes nicht überschritten. Er ist in den Schatten gestürzt. ~ Galadriel")
+		mainWindow_Lothlorien.Message:SetText("Der Feind weiß, dass ihr hier eingetroffen seid. Eure Hoffnung unerkannt zu bleiben, sie ist nun zunichte. Hier sind acht, doch neun sind von Bruchtal aus aufgebrochen. Sagt mir, wo ist Gandalf, denn es verlangt mich sehr mit ihm zu sprechen. Ich kann ihn aus weiter Ferne nicht sehen. ~ Celeborn\n\nGandalf der Graue hat die Grenzen dieses Landes nicht überschritten. Er ist in den Schatten gestürzt. ~ Galadriel")
         end
 		mainWindow_Lothlorien.Message:SetTextAlignment(Turbine.UI.ContentAlignment.TopCenter)
 
@@ -436,7 +450,7 @@ function MainFunction_Edoras()
 		if l == Turbine.Language.English or l == Turbine.Language.EnglishGB then
 			mainWindow_Edoras.Message:SetText("I am Gandalf the White, and I return to you. At the turning point of the tides. One stage of your journey is over. Now comes the next. War has come upon Rohan. We must ride to Edoras as swiftly as we can. ~ Gandalf")
 		elseif l == Turbine.Language.German then
-			mainWindow_Edoras.Message:SetText("Ich bin Gandalf der Weiße und ich kehre zurück zu euch. Am Wendepunkt der Gezeiten. Eine Etappe eurer Reise ist vorüber. Nun folgt die nächste. Krieg ist über Rohan bgekommen. Wir müssen nach Edoras reiten, so geschwind wir können. ~ Gandalf")
+			mainWindow_Edoras.Message:SetText("Ich bin Gandalf der Weiße und ich kehre zurück zu euch. Am Wendepunkt der Gezeiten. Eine Etappe eurer Reise ist vorüber. Nun folgt die nächste. Krieg ist über Rohan gekommen. Wir müssen nach Edoras reiten, so geschwind wir können. ~ Gandalf")
 		elseif l == Turbine.Language.French then
 			mainWindow_Edoras.Message:SetText("Je suis Gandalf le Blanc et je reviens vers vous. Au point d'inflexion des marées. Une étape de votre voyage est terminée. Voici la prochaine. La guerre est arrivée au Rohan. Nous devons nous rendre à Edoras aussi vite que possible. ~ Gandalf")
 		end
@@ -585,7 +599,7 @@ function MainFunction_Mordor()
 		elseif l == Turbine.Language.German then
 			mainWindow_Mordor.Message:SetText("Haltet eure Stellung! Haltet eure Stellung! Söhne Gondors und Rohans, meine Brüder! In euren Augen sehe ich dieselbe Furcht, die auch mich verzagen ließe. Der Tag mag kommen, da der Mut der Menschen erlischt, da wir unsere Gefährten im Stich lassen und aller Freundschaft Bande bricht. Doch dieser Tag ist noch fern. Die Stunde der Wölfe und zerschmetterter Schilde, da das Zeitalter der Menschen tosend untergeht, doch dieser Tag ist noch fern! Denn heute kämpfen wir! Bei allem, was euch teuer ist auf dieser Erde, sage ich: Haltet stand, Menschen des Westens!\n\nFür Frodo! ~ Aragorn")
 		elseif l == Turbine.Language.French then
-			mainWindow_Mordor.Message:SetText("Tenez votre position ! Tenez votre position ! Fils du Gondor et du Rohan, mes frères ! Je vois dans vos yeux la même peur qui m'a fait perdre espoir. Le jour viendra peut-être où le courage des hommes s'éteindra, où nous abandonnerons nos compagnons et où les liens de l'amitié seront rompus. Mais ce jour est encore loin. L'heure des loups et des boucliers brisés, où l'ère des hommes s'éteint avec fracas, mais ce jour est encore loin ! Car aujourd'hui, nous nous battons ! Par tout ce qui vous est cher sur cette terre, je vous le dis : tenez bon, peuple de l'Ouest!\nPour Frodo ! ~ Aragorn")
+			mainWindow_Mordor.Message:SetText("Tenez votre position ! Tenez votre position ! Fils du Gondor et du Rohan, mes frères ! Je vois dans vos yeux la même peur qui m'a fait perdre espoir. Le jour viendra peut-être où le courage des hommes s'éteindra, où nous abandonnerons nos compagnons et où les liens de l'amitié seront rompus. Mais ce jour est encore loin. L'heure des loups et des boucliers brisés, où l'ère des hommes s'éteint avec fracas, mais ce jour est encore loin ! Car aujourd'hui, nous nous battons ! Par tout ce qui vous est cher sur cette terre, je vous le dis : tenez bon, peuple de l'Ouest!\n\nPour Frodon ! ~ Aragorn")
 		end
 		mainWindow_Mordor.Message:SetTextAlignment(Turbine.UI.ContentAlignment.TopCenter)
 
@@ -631,7 +645,7 @@ function MainFunction_GraueAnfurten()
 		if l == Turbine.Language.English or l == Turbine.Language.EnglishGB then
 			mainWindow_GraueAnfurten.Message:SetText("And so it happened that the Fourth Age dawned on Middle Earth. And the Fellowship of the Ring, though eternally united in love and friendship, disintegrated. Exactly 13 months ago, Gandalf had sent us on our long journey. Now we were confronted with a strange sight. We were home! \n\n ~ Frodo")
 		elseif l == Turbine.Language.German then
-			mainWindow_GraueAnfurten.Message:SetText("Und so geschah es, dass das Vierte Zeitalter in Mittelerde anbrach. Und die Gemeinschaft des Ringes, obgleich ewig verbunden in Liebe und Freundschaft, löste sich auf. Genau vor 13 Monaten hatte uns Gandalf auf unsere lange Reise geschickt. Nun bot sich uns ein vertauter Anblick. Wir waren zu Hause! \n\n ~ Frodo")
+			mainWindow_GraueAnfurten.Message:SetText("Und so geschah es, dass das Vierte Zeitalter in Mittelerde anbrach. Und die Gemeinschaft des Ringes, obgleich ewig verbunden in Liebe und Freundschaft, löste sich auf. Genau vor 13 Monaten hatte uns Gandalf auf unsere lange Reise geschickt. Nun bot sich uns ein vertrauter Anblick. Wir waren zu Hause! \n\n ~ Frodo")
 		elseif l == Turbine.Language.French then
 			mainWindow_GraueAnfurten.Message:SetText("Et c'est ainsi que le Quatrième Âge arriva sur la Terre du Milieu. Et la communauté de l'Anneau, bien qu'éternellement unie par l'amour et l'amitié, s'est dissoute. Il y a treize mois exactement, Gandalf nous avait envoyés dans notre long voyage. Maintenant, nous avions une vue imprenable. Nous étions à la maison ! \n\n ~ Frodo")
 		end
@@ -648,8 +662,8 @@ function MainFunction_GraueAnfurten()
 end
 
 
-local guideWindow
 local function showText(title, content)
+    if optionsWindow then optionsWindow:SetVisible(false) end
     if guideWindow then guideWindow:SetVisible(false) end
     guideWindow = Turbine.UI.Lotro.GoldWindow()
     guideWindow:SetText(title)
@@ -694,7 +708,7 @@ local function button(parent, x,y,w,value,action)
 end
 
 mainWindow = Turbine.UI.Lotro.GoldWindow()
-mainWindow:SetText(text.title.." — 1.4.16-community")
+mainWindow:SetText(text.title.." — 1.4.17-community")
 local windowWidth = math.min(640,Turbine.UI.Display:GetWidth())
 local windowHeight = math.min(590,Turbine.UI.Display:GetHeight())
 mainWindow:SetSize(windowWidth,windowHeight)
@@ -819,6 +833,8 @@ render = function(updateSnapshot)
 end
 local function openWindow()
     closeScenes()
+    if guideWindow then guideWindow:SetVisible(false) end
+    if optionsWindow then optionsWindow:SetVisible(false) end
     if levelWindow then levelWindow:SetVisible(false) end
     page = 1
     viewOpen = true
@@ -1074,6 +1090,8 @@ end
 
 local function openLevelWindow(gainedEntries, gainedFromLevel, gainedToLevel, savedUpcoming, savedUpcomingUnavailable)
     closeScenes()
+    if guideWindow then guideWindow:SetVisible(false) end
+    if optionsWindow then optionsWindow:SetVisible(false) end
     mainWindow:SetVisible(false)
     viewOpen = false
     if levelWindow then levelWindow:SetVisible(false) end
@@ -1190,11 +1208,15 @@ controls.previous = button(mainWindow,windowWidth-350,footerY+84,110,text.previo
 controls.following = button(mainWindow,windowWidth-165,footerY+84,110,text.following,function() page=page+1; draw() end)
 button(mainWindow,25,footerY+84,135,text.refresh,function() render(true) end)
 button(mainWindow,25,windowHeight-38,190,text.guide,function() showText(text.intro,text.guideText) end)
-button(mainWindow,windowWidth-120,windowHeight-38,95,text.close,function() mainWindow:SetVisible(false); viewOpen=false end)
+button(mainWindow,windowWidth-120,windowHeight-38,95,text.close,function()
+    mainWindow:SetVisible(false)
+    viewOpen=false
+    save()
+end)
 
 -- Options use their own small window so translations fit at every supported size.
-local optionsWindow
 button(mainWindow,windowWidth-280,windowHeight-38,140,text.options,function()
+    if guideWindow then guideWindow:SetVisible(false) end
     if optionsWindow then optionsWindow:SetVisible(false) end
     optionsWindow = Turbine.UI.Lotro.GoldWindow()
     optionsWindow:SetText(text.optionsTitle)
@@ -1392,6 +1414,10 @@ local function unload()
     if guideWindow then guideWindow:SetVisible(false) end
     if optionsWindow then optionsWindow:SetVisible(false) end
 end
-local plugin = Plugins and Plugins["WelcomeToMiddleEarth"]
-if plugin then bind(plugin,"Unload",unload) end
+-- LOTRO exposes the currently loading plugin through the temporary global
+-- 'plugin' object. Register Unload directly here; querying Plugins[] while the
+-- package is still loading is not reliable.
+if plugin ~= nil then
+    plugin.Unload = unload
+end
 Turbine.Shell.WriteLine(text.loaded)
