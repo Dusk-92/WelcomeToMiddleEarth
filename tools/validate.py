@@ -72,7 +72,8 @@ def locale_block(locale, next_locale=None):
     return strings[start:end if end >= 0 else None]
 
 def keys(block):
-    return set(re.findall(r"\b([A-Za-z_][A-Za-z0-9_]*)\s*=", block))
+    found = set(re.findall(r"\b([A-Za-z_][A-Za-z0-9_]*)\s*=", block))
+    return found - {"fr", "en", "de"}
 
 locale_keys = {
     "fr": keys(locale_block("fr", "en")),
