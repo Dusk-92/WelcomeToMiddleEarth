@@ -1,4 +1,4 @@
--- WelcomeToMiddleEarth 1.4.16-community.
+-- WelcomeToMiddleEarth 1.4.17-community.
 -- Skill names/icons/descriptions still come from the live client.
 -- Normal class skills are filtered against current level milestones verified
 -- from the LOTRO Wiki tables supplied on 2026-09-11. Level-75 mounted-combat
