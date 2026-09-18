@@ -2,8 +2,8 @@
 <Plugin>
   <Information>
     <Name>WelcomeToMiddleEarth</Name>
-    <Author>Thardariel, Die Bewahrer Mittelerdes</Author>
-    <Version>1.4.16-community</Version>
+    <Author>Thardariel, Die Bewahrer Mittelerdes; community maintenance: Dusk-92</Author>
+    <Version>1.4.17-community</Version>
 			<Description>Community maintenance of Thardariel's WelcomeToMiddleEarth, based on version 1.3.
 
 - Reads untrained skill names, icons and descriptions from the game client.
@@ -21,6 +21,7 @@ See README-FR.md and AUDIT-SOURCES.md for validation limits.
 	<Image>Dusk/WelcomeToMiddleEarth/images/the_one_ring.jpg</Image>
   </Information>
   <Package>Dusk.WelcomeToMiddleEarth.Main</Package>
+  <Configuration Apartment="Dusk.WelcomeToMiddleEarth"/>
 </Plugin>
 
 
