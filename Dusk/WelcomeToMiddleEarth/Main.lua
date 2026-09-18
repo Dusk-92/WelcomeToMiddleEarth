@@ -2,11 +2,11 @@ import "Turbine"
 import "Turbine.UI"
 import "Turbine.UI.Lotro"
 import "Turbine.Gameplay"
-import "Thardariel.WelcomeToMiddleEarth.Progression"
-import "Thardariel.WelcomeToMiddleEarth.Strings"
+import "Dusk.WelcomeToMiddleEarth.Progression"
+import "Dusk.WelcomeToMiddleEarth.Strings"
 
-local model = Thardariel.WelcomeToMiddleEarth.Progression
-local translations = Thardariel.WelcomeToMiddleEarth.Strings
+local model = Dusk.WelcomeToMiddleEarth.Progression
+local translations = Dusk.WelcomeToMiddleEarth.Strings
 local language = Turbine.Engine.GetLanguage()
 local locale = language == Turbine.Language.French and "fr" or
     (language == Turbine.Language.German and "de" or "en")
@@ -65,7 +65,7 @@ end
 function MainFunction_Moria()
 		
 		
-		local file_path_moria = "Thardariel/WelcomeToMiddleEarth/images/MinesOfMoria.jpg";
+		local file_path_moria = "Dusk/WelcomeToMiddleEarth/images/MinesOfMoria.jpg";
 			
 		local mainWindow_Moria = Turbine.UI.Lotro.GoldWindow()
         sceneWindows[#sceneWindows+1] = mainWindow_Moria
@@ -114,7 +114,7 @@ end
 function MainFunction_Bree()
 		
 		
-		local file_path_bree = "Thardariel/WelcomeToMiddleEarth/images/Bree.jpg";
+		local file_path_bree = "Dusk/WelcomeToMiddleEarth/images/Bree.jpg";
 			
 		local mainWindow_Bree = Turbine.UI.Lotro.GoldWindow()
         sceneWindows[#sceneWindows+1] = mainWindow_Bree
@@ -163,7 +163,7 @@ end
 function MainFunction_EinsameLande()
 		
 		
-		local file_path_einsamelande = "Thardariel/WelcomeToMiddleEarth/images/Wetterspitze.jpg";
+		local file_path_einsamelande = "Dusk/WelcomeToMiddleEarth/images/Wetterspitze.jpg";
 			
 		local mainWindow_EinsameLande = Turbine.UI.Lotro.GoldWindow()
         sceneWindows[#sceneWindows+1] = mainWindow_EinsameLande
@@ -212,7 +212,7 @@ end
 function MainFunction_Bruchtal()
 		
 		
-		local file_path_bruchtal = "Thardariel/WelcomeToMiddleEarth/images/Bruchtal.jpg";
+		local file_path_bruchtal = "Dusk/WelcomeToMiddleEarth/images/Bruchtal.jpg";
 			
 		local mainWindow_Bruchtal = Turbine.UI.Lotro.GoldWindow()
         sceneWindows[#sceneWindows+1] = mainWindow_Bruchtal
@@ -261,7 +261,7 @@ end
 function MainFunction_Lothlorien()
 		
 		
-		local file_path_lothlorien = "Thardariel/WelcomeToMiddleEarth/images/Lothlorien.jpg";
+		local file_path_lothlorien = "Dusk/WelcomeToMiddleEarth/images/Lothlorien.jpg";
 			
 		local mainWindow_Lothlorien = Turbine.UI.Lotro.GoldWindow()
         sceneWindows[#sceneWindows+1] = mainWindow_Lothlorien
@@ -308,7 +308,7 @@ end
 function MainFunction_Isengart()
 		
 		
-		local file_path_isengart = "Thardariel/WelcomeToMiddleEarth/images/Isengart.jpg";
+		local file_path_isengart = "Dusk/WelcomeToMiddleEarth/images/Isengart.jpg";
 			
 		local mainWindow_Isengart = Turbine.UI.Lotro.GoldWindow()
         sceneWindows[#sceneWindows+1] = mainWindow_Isengart
@@ -357,7 +357,7 @@ end
 function MainFunction_AmonHen()
 		
 		
-		local file_path_amonhen = "Thardariel/WelcomeToMiddleEarth/images/AmonHen.jpg";
+		local file_path_amonhen = "Dusk/WelcomeToMiddleEarth/images/AmonHen.jpg";
 			
 		local mainWindow_AmonHen = Turbine.UI.Lotro.GoldWindow()
         sceneWindows[#sceneWindows+1] = mainWindow_AmonHen
@@ -406,7 +406,7 @@ end
 function MainFunction_Edoras()
 		
 		
-		local file_path_edoras = "Thardariel/WelcomeToMiddleEarth/images/Edoras.jpg";
+		local file_path_edoras = "Dusk/WelcomeToMiddleEarth/images/Edoras.jpg";
 			
 		local mainWindow_Edoras = Turbine.UI.Lotro.GoldWindow()
         sceneWindows[#sceneWindows+1] = mainWindow_Edoras
@@ -455,7 +455,7 @@ end
 function MainFunction_HelmsKlamm()
 		
 		
-		local file_path_helmsklamm = "Thardariel/WelcomeToMiddleEarth/images/HelmsKlamm.jpg";
+		local file_path_helmsklamm = "Dusk/WelcomeToMiddleEarth/images/HelmsKlamm.jpg";
 			
 		local mainWindow_HelmsKlamm = Turbine.UI.Lotro.GoldWindow()
         sceneWindows[#sceneWindows+1] = mainWindow_HelmsKlamm
@@ -504,7 +504,7 @@ end
 function MainFunction_MinasTirith()
 		
 		
-		local file_path_minastirith = "Thardariel/WelcomeToMiddleEarth/images/MinasTirith.jpg";
+		local file_path_minastirith = "Dusk/WelcomeToMiddleEarth/images/MinasTirith.jpg";
 			
 		local mainWindow_MinasTirith = Turbine.UI.Lotro.GoldWindow()
         sceneWindows[#sceneWindows+1] = mainWindow_MinasTirith
@@ -553,7 +553,7 @@ end
 function MainFunction_Mordor()
 		
 		
-		local file_path_mordor = "Thardariel/WelcomeToMiddleEarth/images/Mordor.jpg";
+		local file_path_mordor = "Dusk/WelcomeToMiddleEarth/images/Mordor.jpg";
 			
 		local mainWindow_Mordor = Turbine.UI.Lotro.GoldWindow()
         sceneWindows[#sceneWindows+1] = mainWindow_Mordor
@@ -601,7 +601,7 @@ end
 
 function MainFunction_GraueAnfurten()
 		
-		local file_path_graueanfurten = "Thardariel/WelcomeToMiddleEarth/images/GraueAnfurten.jpg";
+		local file_path_graueanfurten = "Dusk/WelcomeToMiddleEarth/images/GraueAnfurten.jpg";
 			
 		local mainWindow_GraueAnfurten = Turbine.UI.Lotro.GoldWindow()
         sceneWindows[#sceneWindows+1] = mainWindow_GraueAnfurten

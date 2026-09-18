@@ -18,9 +18,9 @@
 
 See README-FR.md and AUDIT-SOURCES.md for validation limits.
 </Description>
-	<Image>Thardariel/WelcomeToMiddleEarth/images/the_one_ring.jpg</Image>
+	<Image>Dusk/WelcomeToMiddleEarth/images/the_one_ring.jpg</Image>
   </Information>
-  <Package>Thardariel.WelcomeToMiddleEarth.Main</Package>
+  <Package>Dusk.WelcomeToMiddleEarth.Main</Package>
 </Plugin>
 
 

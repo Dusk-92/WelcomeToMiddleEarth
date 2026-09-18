@@ -1,1 +1,1 @@
-import "Thardariel.WelcomeToMiddleEarth.Main";
+import "Dusk.WelcomeToMiddleEarth.Main";
